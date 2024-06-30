@@ -41,18 +41,43 @@ function findZodiacSign(birthYear){
           for(const [k, v] of Object.entries(value)){
                if(birthYear == v){
                   console.log(key);
+                  getZodiacAnimal(key);
                }
           }
         
      }
 }
 
+function getZodiacAnimal(animal){
+        let div = document.createElement('div');
+        let h1 = document.createElement('h1');
+        let p = document.createElement('p');
+        let headingText = document.createTextNode(animal);
+        let paragraphText = document.createTextNode(`The Year of the ${animal}`)
+        h1.appendChild(headingText);
+        h1.setAttribute('id', 'animalHeading');
+        p.appendChild(paragraphText);
+        div.setAttribute('id', 'card');
+        div.appendChild(h1);
+        div.appendChild(p);
+        document.querySelector('body').appendChild(div);
+} 
+
 createChineseZodiacCalendar();
 
 document.querySelector('#year').addEventListener('keyup', (e) => {
     var birthYear =  document.querySelector('#year').value;
-   if(e.keyCode == 13) {
-      findZodiacSign(birthYear);
-   }
+    var card =  document.querySelector('#card');
+    var txtFld = document.querySelector('#year');
+    if(e.keyCode == 13) {
+        if(card){
+             card.remove();
+             findZodiacSign(birthYear); 
+        } else {
+            findZodiacSign(birthYear); 
+        }          
+    } else if(txtFld.value == ''){
+        card.remove(); 
+    }
 })
 
